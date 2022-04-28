@@ -2,7 +2,7 @@ def solve(target_num, in_data):
     print(f'=== [by brute force search] ===')
     b_results = by_brute_force_search(target_num, in_data)
     for b_result in b_results:
-        print(f'{b_result}=100')
+        print(f'{b_result}={target_num}')
 
     print(f'=== [by recursive search] ===')
     by_recursive_search(target_num, in_data, [])
@@ -27,7 +27,6 @@ def by_brute_force_search(target_num, in_data):
 
     return results
 
-
 def by_recursive_search(target_num, in_data, current):
     """
     Search for a formula that satisfies the target value recursively.
@@ -51,17 +50,27 @@ def by_recursive_search(target_num, in_data, current):
 
 
 def print_result(target_num, in_data, current):
+    formula = ''
+    for idx, data in enumerate(in_data):
+        formula += str(data)
+        if idx < len(current):
+            formula += current[idx]
+    if eval(formula) == target_num:
+        print(f'{formula}={target_num}')
+
+
+def print_result_legacy(target_num, in_data, current):
     result = []
-    for i in range(len(in_data)):
-        result.append(str(in_data[i]))
-        if i < len(current):
-            result.append(current[i])
-    formula = ''.join(result)
+    for idx, data in enumerate(in_data):
+        result.append(data)
+        if idx < len(current):
+            result.append(current[idx])
+    formula = ''.join(map(str, result))
     if eval(formula) == target_num:
         print(f'{formula}={target_num}')
 
 
 if __name__ == '__main__':
-    target_num = 100
+    target_num = 2022
     test_data = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     solve(target_num, test_data)
